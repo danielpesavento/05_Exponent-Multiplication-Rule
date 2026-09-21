@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8.EE.1 Integer Exponents - Exponent Multiplication Rule - Interactive Practice</title>
+<style>
+  :root {
+    --navy: #1a3a5c;
+    --navy-dark: #10253d;
+    --gold: #c9a227;
+    --gold-light: #e8d38a;
+    --cream: #faf8f3;
+    --green: #2e7d47;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Calibri, "Segoe UI", Arial, sans-serif;
+    background: var(--cream);
+    color: var(--navy-dark);
+    margin: 0;
+    padding: 0 0 60px 0;
+  }
+  header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 24px 20px;
+    text-align: center;
+    border-bottom: 6px solid var(--gold);
+  }
+  header h1 {
+    margin: 0 0 6px 0;
+    font-size: 1.6em;
+  }
+  header p {
+    margin: 0;
+    color: var(--gold-light);
+    font-size: 0.95em;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .student-field {
+    background: #fff;
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+  }
+  .student-field label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    color: var(--navy);
+  }
+  .student-field input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    font-family: inherit;
+    border: 1px solid #999;
+    border-radius: 5px;
+  }
+  .batch {
+    display: none;
+  }
+  .batch.active {
+    display: block;
+  }
+  .question {
+    background: #fff;
+    margin: 14px 0;
+    padding: 16px 18px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  .topic-label {
+    font-weight: bold;
+    color: var(--gold);
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+  }
+  .question-label {
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 0.85em;
+    margin-bottom: 8px;
+  }
+  .question-text {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: var(--navy-dark);
+    font-size: 1.15em;
+  }
+  .question-instructions {
+    font-style: italic;
+    color: #555;
+    font-size: 0.88em;
+    margin-bottom: 12px;
+  }
+  .options label {
+    display: block;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #fdfdfd;
+  }
+  .options label:hover {
+    background: #f0ede3;
+  }
+  .options input[type="radio"] {
+    margin-right: 8px;
+  }
+  .fib-input {
+    width: 100%;
+    max-width: 260px;
+    padding: 10px;
+    font-size: 1.05em;
+    font-family: inherit;
+    border: 1px solid #999;
+    border-radius: 5px;
+    margin-bottom: 4px;
+  }
+  .btn-row {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  button.hint-btn, button.nav-btn, button.submit-btn, button.check-btn, button.answer-btn, button.clear-btn {
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9em;
+  }
+  button.hint-btn:hover, button.nav-btn:hover, button.submit-btn:hover, button.check-btn:hover, button.answer-btn:hover, button.clear-btn:hover {
+    background: var(--navy-dark);
+  }
+  button.check-btn {
+    background: var(--green);
+  }
+  button.check-btn:hover {
+    background: #235c36;
+  }
+  button.check-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  button.answer-btn {
+    background: var(--gold);
+    color: var(--navy-dark);
+    display: none;
+  }
+  button.answer-btn:hover {
+    background: var(--gold-light);
+  }
+  button.clear-btn {
+    background: #777;
+  }
+  button.clear-btn:hover {
+    background: #5a5a5a;
+  }
+  .hint-box {
+    margin-top: 8px;
+    background: #fff8e6;
+    border-left: 4px solid var(--gold);
+    padding: 8px 12px;
+    font-size: 0.9em;
+    display: none;
+  }
+  .feedback {
+    margin-top: 8px;
+    font-weight: bold;
+    font-size: 0.9em;
+    min-height: 1.2em;
+  }
+  .feedback.correct { color: var(--green); }
+  .feedback.incorrect { color: #b3382c; }
+  .explainer {
+    margin-top: 10px;
+    background: #eaf1fb;
+    border-left: 4px solid var(--navy);
+    padding: 10px 12px;
+    font-size: 0.9em;
+    display: none;
+  }
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .submit-section {
+    text-align: center;
+    margin-top: 36px;
+    padding: 20px;
+    border-top: 2px solid var(--gold);
+  }
+  .status-msg {
+    margin-top: 14px;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.05em;
+  }
+  .submitted-tag {
+    display: none;
+    margin-top: 8px;
+    font-size: 0.82em;
+    font-weight: bold;
+    color: var(--green);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>8.EE.1 Integer Exponents - Exponent Multiplication Rule - Interactive Practice</h1>
+</header>
+
+<div class="container">
+
+  <div class="student-field">
+    <label for="studentName">Student Name:</label>
+    <input type="text" id="studentName" placeholder="Type your full name">
+  </div>
+
+  <div id="batchContainer"></div>
+
+  <div class="nav-row">
+    <button type="button" class="nav-btn" id="backBtn" onclick="goBack()">&larr; Back</button>
+    <button type="button" class="nav-btn" id="nextBtn" onclick="goNext()">Next &rarr;</button>
+  </div>
+
+  <div class="submit-section">
+    <button class="submit-btn" id="submitBtn" onclick="submitQuiz()">Submit Activity</button>
+    <div class="status-msg" id="statusMsg"></div>
+    <div class="status-msg" id="statusMsgSub" style="font-size:0.85em; font-weight:normal; color:#555;"></div>
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   CONFIG: paste your deployed Google Apps Script Web App URL here
+   ========================================================= */
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxGyCOqkZk2xYdcG52gZJOeQ8UejGOlYzCW3v8iGwA7v27ChfnPiUr1382iV4QpMco/exec";
+
+const BATCH_SIZE = 1;
+const TOTAL_QUESTIONS = 10;
+const ATTEMPTS_BEFORE_ANSWER_BUTTON = 2;
+
+const MC_INSTRUCTIONS = "Choose the answer that best completes the statement.";
+const FIB_INSTRUCTIONS = "Type your answer in the box below (enter a whole number).";
+
+/* =========================================================
+   QUESTION DATA
+   type: "mc" (multiple choice) or "fib" (fill-in-the-blank)
+   topic: gold label shown above each question
+   topicNum: this question's position within its topic (numbering resets per topic)
+   ========================================================= */
+const questions = [
+  { id: 1, topic: "Exponent Multiplication Rule", topicNum: 1, type: "mc", text: "Apply the power of a power rule: (7<sup>3</sup>)<sup>2</sup>", options: {"A":"117649","B":"16807","C":"49","D":"40353607"}, correct: "A", hint: "To raise a power to a power, keep the base and multiply the exponents.", explainer: "Correct answer: A. (7<sup>3</sup>)<sup>2</sup> = 7<sup>3&middot;2</sup> = 7<sup>6</sup> = 117649." },
+  { id: 2, topic: "Exponent Multiplication Rule", topicNum: 2, type: "fib", text: "Apply the power of a power rule: (2<sup>4</sup>)<sup>3</sup>", answer: "4096", hint: "Keep the base and multiply the exponents: 4 &times; 3.", explainer: "Correct answer: 4096. (2<sup>4</sup>)<sup>3</sup> = 2<sup>4&middot;3</sup> = 2<sup>12</sup> = 4096." },
+  { id: 3, topic: "Exponent Multiplication Rule", topicNum: 3, type: "mc", text: "Apply the power of a power rule: (5<sup>2</sup>)<sup>3</sup>", options: {"A":"3125","B":"25","C":"15625","D":"125"}, correct: "C", hint: "Keep the base and multiply the exponents: 2 &times; 3.", explainer: "Correct answer: C. (5<sup>2</sup>)<sup>3</sup> = 5<sup>2&middot;3</sup> = 5<sup>6</sup> = 15625." },
+  { id: 4, topic: "Exponent Multiplication Rule", topicNum: 4, type: "fib", text: "Apply the power of a power rule: (3<sup>4</sup>)<sup>2</sup>", answer: "6561", hint: "Keep the base and multiply the exponents: 4 &times; 2.", explainer: "Correct answer: 6561. (3<sup>4</sup>)<sup>2</sup> = 3<sup>4&middot;2</sup> = 3<sup>8</sup> = 6561." },
+  { id: 5, topic: "Exponent Multiplication Rule", topicNum: 5, type: "mc", text: "Apply the power of a power rule: (10<sup>2</sup>)<sup>3</sup>", options: {"A":"1000000","B":"100000","C":"100","D":"1000"}, correct: "A", hint: "Keep the base and multiply the exponents: 2 &times; 3.", explainer: "Correct answer: A. (10<sup>2</sup>)<sup>3</sup> = 10<sup>2&middot;3</sup> = 10<sup>6</sup> = 1000000." },
+  { id: 6, topic: "Exponent Multiplication Rule", topicNum: 6, type: "mc", text: "Simplify the following expression and choose the correct result: (w<sup>8</sup>)<sup>8</sup>", options: {"A":"w<sup>8</sup>","B":"w<sup>64</sup>","C":"w<sup>16</sup>","D":"w<sup>9</sup>"}, correct: "B", hint: "To raise a power to a power, keep the base and multiply the exponents.", explainer: "Correct answer: B. (w<sup>8</sup>)<sup>8</sup> = w<sup>8&middot;8</sup> = w<sup>64</sup>." },
+  { id: 7, topic: "Exponent Multiplication Rule", topicNum: 7, type: "fib", text: "Solve for n: (6<sup>n</sup>)<sup>3</sup> = 6<sup>15</sup>", answer: "5", hint: "Set up the exponent equation: n &times; 3 = 15.", explainer: "Correct answer: 5. Since (6<sup>n</sup>)<sup>3</sup> = 6<sup>3n</sup> = 6<sup>15</sup>, then 3n = 15, so n = 5." },
+  { id: 8, topic: "Exponent Multiplication Rule", topicNum: 8, type: "mc", text: "Simplify: (p<sup>4</sup>)<sup>5</sup>", options: {"A":"p<sup>20</sup>","B":"p<sup>9</sup>","C":"p<sup>4</sup>","D":"p<sup>5</sup>"}, correct: "A", hint: "Multiply the exponents: 4 &times; 5.", explainer: "Correct answer: A. (p<sup>4</sup>)<sup>5</sup> = p<sup>4&middot;5</sup> = p<sup>20</sup>." },
+  { id: 9, topic: "Exponent Multiplication Rule", topicNum: 9, type: "fib", text: "Solve for n: (4<sup>3</sup>)<sup>n</sup> = 4<sup>12</sup>", answer: "4", hint: "Set up the exponent equation: 3 &times; n = 12.", explainer: "Correct answer: 4. Since (4<sup>3</sup>)<sup>n</sup> = 4<sup>3n</sup> = 4<sup>12</sup>, then 3n = 12, so n = 4." },
+  { id: 10, topic: "Exponent Multiplication Rule", topicNum: 10, type: "mc", text: "Simplify: (z<sup>6</sup>)<sup>2</sup>", options: {"A":"z<sup>12</sup>","B":"z<sup>8</sup>","C":"z<sup>6</sup>","D":"z<sup>2</sup>"}, correct: "A", hint: "Multiply the exponents: 6 &times; 2.", explainer: "Correct answer: A. (z<sup>6</sup>)<sup>2</sup> = z<sup>6&middot;2</sup> = z<sup>12</sup>." }
+];
+
+const state = {};
+questions.forEach(q => { state[q.id] = { attempts: 0, locked: false }; });
+
+// Tracks which questions have already been included in a previous
+// "Submit Activity" click during this browser session, so repeat
+// submissions only send NEW answers and never resend the same one twice.
+const alreadySubmitted = {};
+questions.forEach(q => { alreadySubmitted[q.id] = false; });
+let submissionCount = 0;
+
+let currentBatch = 0;
+const totalBatches = Math.ceil(TOTAL_QUESTIONS / BATCH_SIZE);
+
+function buildQuiz() {
+  const container = document.getElementById("batchContainer");
+
+  for (let b = 0; b < totalBatches; b++) {
+    const batchDiv = document.createElement("div");
+    batchDiv.className = "batch" + (b === 0 ? " active" : "");
+    batchDiv.id = "batch-" + b;
+
+    const startIdx = b * BATCH_SIZE;
+    const endIdx = Math.min(startIdx + BATCH_SIZE, TOTAL_QUESTIONS);
+
+    for (let i = startIdx; i < endIdx; i++) {
+      const q = questions[i];
+      const div = document.createElement("div");
+      div.className = "question";
+      div.id = "q" + q.id;
+
+      let answerAreaHtml = "";
+      let instructionsText = "";
+
+      if (q.type === "fib") {
+        instructionsText = FIB_INSTRUCTIONS;
+        answerAreaHtml = `<input type="text" class="fib-input" id="fib-${q.id}" placeholder="Your answer" inputmode="numeric">`;
+      } else {
+        instructionsText = MC_INSTRUCTIONS;
+        let optionsHtml = "";
+        ["A", "B", "C", "D"].forEach(letter => {
+          optionsHtml += `
+            <label>
+              <input type="radio" name="q${q.id}" value="${letter}">
+              <strong>${letter}.</strong> ${q.options[letter]}
+            </label>`;
+        });
+        answerAreaHtml = `<div class="options">${optionsHtml}</div>`;
+      }
+
+      div.innerHTML = `
+        <div class="question-label">Question ${q.topicNum}</div>
+        <div class="question-text">${q.text}</div>
+        <div class="question-instructions">${instructionsText}</div>
+        ${answerAreaHtml}
+        <div class="btn-row">
+          <button type="button" class="hint-btn" onclick="toggleHint(${q.id})">Hint</button>
+          <button type="button" class="check-btn" id="check-btn-${q.id}" onclick="checkAnswer(${q.id})">Submit Answer</button>
+          <button type="button" class="answer-btn" id="answer-btn-${q.id}" onclick="showAnswer(${q.id})">Show Answer</button>
+          <button type="button" class="clear-btn" onclick="clearQuestion(${q.id})">Clear Answer</button>
+        </div>
+        <div class="hint-box" id="hint-${q.id}">${q.hint}</div>
+        <div class="feedback" id="feedback-${q.id}"></div>
+        <div class="explainer" id="explainer-${q.id}">${q.explainer}</div>
+        <div class="submitted-tag" id="submitted-tag-${q.id}">&#10003; Sent to your teacher - editing this won't resend it.</div>
+      `;
+      batchDiv.appendChild(div);
+    }
+    container.appendChild(batchDiv);
+  }
+  updateNav();
+}
+
+function updateNav() {
+  document.getElementById("backBtn").disabled = (currentBatch === 0);
+  document.getElementById("nextBtn").disabled = (currentBatch === totalBatches - 1);
+}
+
+function goNext() {
+  if (currentBatch < totalBatches - 1) {
+    document.getElementById("batch-" + currentBatch).classList.remove("active");
+    currentBatch++;
+    document.getElementById("batch-" + currentBatch).classList.add("active");
+    updateNav();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function goBack() {
+  if (currentBatch > 0) {
+    document.getElementById("batch-" + currentBatch).classList.remove("active");
+    currentBatch--;
+    document.getElementById("batch-" + currentBatch).classList.add("active");
+    updateNav();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function toggleHint(id) {
+  const box = document.getElementById("hint-" + id);
+  box.style.display = (box.style.display === "block") ? "none" : "block";
+}
+
+function checkAnswer(id) {
+  const q = questions.find(item => item.id === id);
+  const feedback = document.getElementById("feedback-" + id);
+  const answerBtn = document.getElementById("answer-btn-" + id);
+  const checkBtn = document.getElementById("check-btn-" + id);
+
+  if (state[id].locked) return;
+
+  const chosen = getSelected(id);
+  if (!chosen) {
+    alert(q.type === "fib" ? "Please type an answer before clicking Submit Answer." : "Please select an answer before clicking Submit Answer.");
+    return;
+  }
+
+  const isCorrect = (q.type === "fib")
+    ? (chosen.trim().toLowerCase() === q.answer.trim().toLowerCase())
+    : (chosen === q.correct);
+
+  if (isCorrect) {
+    feedback.textContent = "Correct!";
+    feedback.className = "feedback correct";
+    state[id].locked = true;
+    checkBtn.disabled = true;
+  } else {
+    state[id].attempts += 1;
+    const remaining = ATTEMPTS_BEFORE_ANSWER_BUTTON - state[id].attempts;
+    if (remaining > 0) {
+      feedback.textContent = `Not quite - try again. (${remaining} attempt${remaining === 1 ? "" : "s"} left before the Show Answer button appears)`;
+      feedback.className = "feedback incorrect";
+    } else {
+      feedback.textContent = "Not quite. Click \"Show Answer\" for a detailed explanation, or click \"Clear Answer\" to try fresh.";
+      feedback.className = "feedback incorrect";
+      answerBtn.style.display = "inline-block";
+    }
+  }
+}
+
+function showAnswer(id) {
+  const explainerBox = document.getElementById("explainer-" + id);
+  explainerBox.style.display = "block";
+}
+
+function clearQuestion(id) {
+  const q = questions.find(item => item.id === id);
+
+  if (q.type === "fib") {
+    document.getElementById("fib-" + id).value = "";
+  } else {
+    const radios = document.querySelectorAll(`input[name="q${id}"]`);
+    radios.forEach(r => { r.checked = false; });
+  }
+
+  // Reset state and wrong-attempt counter
+  state[id].attempts = 0;
+  state[id].locked = false;
+
+  // Re-enable the Submit Answer button
+  document.getElementById("check-btn-" + id).disabled = false;
+
+  // Hide the Show Answer button and explanation again
+  document.getElementById("answer-btn-" + id).style.display = "none";
+  document.getElementById("explainer-" + id).style.display = "none";
+
+  // Clear feedback text
+  const feedback = document.getElementById("feedback-" + id);
+  feedback.textContent = "";
+  feedback.className = "feedback";
+
+  // Also hide the hint box so the question resets fully
+  document.getElementById("hint-" + id).style.display = "none";
+
+  // If this question was already sent in a previous submission, clearing
+  // it makes it eligible to be sent again once re-answered.
+  alreadySubmitted[id] = false;
+  const tag = document.getElementById("submitted-tag-" + id);
+  if (tag) tag.style.display = "none";
+}
+
+function getSelected(id) {
+  const q = questions.find(item => item.id === id);
+  if (q.type === "fib") {
+    const input = document.getElementById("fib-" + id);
+    return input ? input.value.trim() : "";
+  }
+  const chosen = document.querySelector(`input[name="q${id}"]:checked`);
+  return chosen ? chosen.value : "";
+}
+
+function submitQuiz() {
+  const name = document.getElementById("studentName").value.trim();
+  const statusMsg = document.getElementById("statusMsg");
+  const statusMsgSub = document.getElementById("statusMsgSub");
+
+  if (!name) {
+    alert("Please enter your name before submitting.");
+    return;
+  }
+
+  // Only include answers for questions that (a) currently have a value
+  // and (b) have NOT already been sent in a previous submission this
+  // session. Everything else goes as blank, so repeat submissions never
+  // resend the same answer twice.
+  const answers = questions.map(q => {
+    if (alreadySubmitted[q.id]) return "";
+    const val = getSelected(q.id);
+    return val ? val : "";
+  });
+
+  const newlyIncludedIds = questions
+    .filter(q => !alreadySubmitted[q.id] && getSelected(q.id))
+    .map(q => q.id);
+
+  if (newlyIncludedIds.length === 0) {
+    alert("You haven't answered any new questions since your last submission. Answer at least one question before submitting again.");
+    return;
+  }
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    student: name,
+    answers: answers
+  };
+
+  const submitBtn = document.getElementById("submitBtn");
+  submitBtn.disabled = true;
+  statusMsg.textContent = "Submitting...";
+
+  fetch(GAS_WEB_APP_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    // Mark these questions as sent, and tag them visibly on the page
+    newlyIncludedIds.forEach(id => {
+      alreadySubmitted[id] = true;
+      const tag = document.getElementById("submitted-tag-" + id);
+      if (tag) tag.style.display = "block";
+    });
+
+    submissionCount++;
+    statusMsg.textContent = "Submitted! Thank you, " + name + ".";
+    statusMsgSub.textContent = `This submission (#${submissionCount}) sent ${newlyIncludedIds.length} question${newlyIncludedIds.length === 1 ? "" : "s"}. You can keep working and click Submit Activity again later to send more.`;
+
+    // Re-enable so the student can submit again later in the same session
+    submitBtn.disabled = false;
+  }).catch(() => {
+    statusMsg.textContent = "Submission may have failed - check your connection and try again.";
+    submitBtn.disabled = false;
+  });
+}
+
+buildQuiz();
+</script>
+
+</body>
+</html>
